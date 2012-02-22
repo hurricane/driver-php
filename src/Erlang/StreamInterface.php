@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Implementation of the Erlang binary protocol.
+ *
+ * Provides facilities to work with Standard I/O streams, sockets, and
+ * Erlang binary messages.
+ */
 namespace Erlang;
 
 /**

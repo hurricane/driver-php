@@ -1,9 +1,37 @@
 <?php
 
+/**
+ * Implementation of the Erlang binary protocol.
+ *
+ * Provides facilities to work with Standard I/O streams, sockets, and
+ * Erlang binary messages.
+ */
 namespace Erlang;
 
 class Util
 {
+    const MACHINE_ENDIANNESS_LITTLE_ENDIAN = 'LITTLE_ENDIAN';
+    const MACHINE_ENDIANNESS_BIG_ENDIAN = 'BIG_ENDIAN';
+    private static $machineEndiness;
+
+    /**
+     * set MACHINE_ENDIANNESS only once, forever, when requested
+     *
+     * @static
+     * @return string MACHINE_ENDIANNESS
+     */
+    public static function getMachineEndianness()
+    {
+        if (is_null(self::$machineEndiness)) {
+            if (reset(unpack('L', "\x00\x00\x00\x01")) == 1) {
+                self::$machineEndiness = self::MACHINE_ENDIANNESS_BIG_ENDIAN;
+            } else {
+                self::$machineEndiness = self::MACHINE_ENDIANNESS_LITTLE_ENDIAN;
+            }
+        }
+        return self::$machineEndiness;
+    }
+
     /**
      * Turn an Erlang-style property list into a map.
      *
@@ -55,7 +83,7 @@ class Util
      */
     public static function decode_integer_ext(StreamInterface $stream) {
         $val = $stream->read(4);
-        if (MACHINE_ENDIANNESS == 'LITTLE_ENDIAN') {
+        if (self::getMachineEndianness() == self::MACHINE_ENDIANNESS_LITTLE_ENDIAN) {
             $val = strrev($val);
         }
         return reset(unpack('l', $val));
@@ -399,7 +427,7 @@ class Util
      */
     public static function decode_new_float_ext(StreamInterface $stream) {
         $data = $stream->read(8);
-        if (MACHINE_ENDIANNESS == 'LITTLE_ENDIAN') {
+        if (self::getMachineEndianness() == self::MACHINE_ENDIANNESS_LITTLE_ENDIAN) {
             $data = strrev($data);
         }
         return reset(unpack('d', $data));
@@ -472,7 +500,7 @@ class Util
     public static function encode_float($data, StreamInterface $stream) {
         $stream->write(chr(70));
         $val = pack('d', $data);
-        if (MACHINE_ENDIANNESS == 'LITTLE_ENDIAN') {
+        if (self::getMachineEndianness() == self::MACHINE_ENDIANNESS_LITTLE_ENDIAN) {
             $val = strrev($val);
         }
         $stream->write($val);

@@ -3,13 +3,10 @@
 /**
  * bootstrap hurricane
  *
- * @todo - move Erlang/_setup.php to Util.php
- * @todo - figure out how to encapsulate MACHINE_ENDIANNESS
  * @todo - setup autoload, remove this file
  * @todo - update README
  */
 
-require_once __DIR__ . '/Erlang/_setup.php';
 require_once __DIR__ . '/Erlang/Atom.php';
 require_once __DIR__ . '/Erlang/AtomCacheRef.php';
 require_once __DIR__ . '/Erlang/Binary.php';
