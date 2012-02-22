@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../src/erl_codec.php';
+require_once dirname(__FILE__) . '/../src/hurricane.php';
 
 /**
  * Tests that all decoding works correctly.
