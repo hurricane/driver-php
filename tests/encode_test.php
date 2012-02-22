@@ -19,8 +19,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -36,8 +36,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         $expected = array(131, 77, 0, 0, 0, 4, 4, 195, 139, 30, 64);
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -53,8 +53,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         $expected = array(131, 82, 1);
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -70,8 +70,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         $expected = array(131, 97, 69);
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -87,8 +87,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         $expected = array(131, 98, 255, 255, 255, 187);
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -106,8 +106,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         $expected = array(131, 70, 90, 70, 113, 98, 55, 2, 224, 150);
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -125,8 +125,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         $expected = array(131, 70, 127, 240, 0, 0, 0, 0, 0, 0);
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -144,8 +144,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -165,8 +165,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -187,8 +187,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -209,8 +209,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -231,8 +231,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -251,8 +251,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -349,8 +349,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -366,8 +366,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         $expected = array(131, 106);
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -383,8 +383,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         $expected = array(131, 109, 0, 0, 0, 4, 97, 98, 99, 100);
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -404,8 +404,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -424,8 +424,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -444,8 +444,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -467,8 +467,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -492,8 +492,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -521,8 +521,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -543,8 +543,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -564,8 +564,8 @@ class EncodeTest extends PHPUnit_Framework_TestCase
         );
 
         $stream = new Erlang\StreamEmulator();
-        Erlang\encode($input, $stream);
-        $actual = Erlang\from_binary($stream->data);
+        Erlang\Util::encode($input, $stream);
+        $actual = Erlang\Util::from_binary($stream->data);
 
         $this->assertEquals($expected, $actual);
     }

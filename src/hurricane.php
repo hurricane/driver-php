@@ -31,3 +31,4 @@ require_once __DIR__ . '/Erlang/StreamInterface.php';
 require_once __DIR__ . '/Erlang/Tuple.php';
 require_once __DIR__ . '/Hurricane/Gateway.php';
 require_once __DIR__ . '/Hurricane/Message.php';
+require_once __DIR__ . '/Hurricane/Util.php';

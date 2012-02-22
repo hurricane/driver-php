@@ -75,7 +75,7 @@ class Gateway {
         $message_len = reset(unpack('N', $message_len));
         $this->stream_wrapper->clear();
         $this->stream_wrapper->write($this->stream->read($message_len));
-        $message = decode($this->stream_wrapper);
+        $message = Util::decode($this->stream_wrapper);
         return $message;
     }
 
@@ -88,7 +88,7 @@ class Gateway {
      */
     public function send($message) {
         $this->stream_wrapper->clear();
-        encode($message, $this->stream_wrapper);
+        Util::encode($message, $this->stream_wrapper);
         $this->stream->write(pack('N', strlen($this->stream_wrapper->data)));
         $this->stream->write($this->stream_wrapper->data);
         $this->stream->flush();

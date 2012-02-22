@@ -33,7 +33,7 @@ class StreamEmulator implements StreamInterface {
         if (!$data) {
             $this->data = '';
         } else if (is_array($data)) {
-            $this->data = to_binary($data);
+            $this->data = Util::to_binary($data);
         } else {
             $this->data = $data;
         }
