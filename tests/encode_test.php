@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../erl_codec.php';
+require_once dirname(__FILE__) . '/../src/erl_codec.php';
 
 /**
  * Tests that all encoding works correctly.

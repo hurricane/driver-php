@@ -1,6 +1,6 @@
 <?php
 
-require dirname(__FILE__) . '/../drivers/php/hurricane.php';
+require dirname(__FILE__) . '/../src/hurricane.php';
 
 date_default_timezone_set('America/Denver');
 
