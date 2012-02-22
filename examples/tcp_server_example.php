@@ -1,6 +1,8 @@
 <?php
 
-require dirname(__FILE__) . '/../src/hurricane.php';
+require dirname(__FILE__) . '/../src/Hurricane/Autoload.php';
+
+\Hurricane\Autoload::registerSpl();
 
 date_default_timezone_set('America/Denver');
 
