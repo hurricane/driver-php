@@ -6,32 +6,25 @@
  * Provides facilities to work with Standard I/O streams, sockets, and
  * Erlang binary messages.
  */
-namespace Erlang;
+namespace Hurricane\Erlang;
 
 /**
- * Implements an Erlang bit binary.
+ * Implements an Erlang atom cache ref.
  */
-class BitBinary {
+class AtomCacheRef {
     /**
      * @var integer
      */
-    public $bits;
-
-    /**
-     * @var string
-     */
-    public $data;
+    public $value;
 
     /**
      * Set the given data on the object.
      *
-     * @param integer $bits
-     * @param string $data
+     * @param integer $value
      *
      * @return void
      */
-    public function __construct($bits, $data) {
-        $this->bits = $bits;
-        $this->data = $data;
+    public function __construct($value) {
+        $this->value = $value;
     }
 }

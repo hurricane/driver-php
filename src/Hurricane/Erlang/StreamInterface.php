@@ -6,7 +6,7 @@
  * Provides facilities to work with Standard I/O streams, sockets, and
  * Erlang binary messages.
  */
-namespace Erlang;
+namespace Hurricane\Erlang;
 
 /**
  * Defines an interface that must be implemented for any object that

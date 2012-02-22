@@ -6,12 +6,12 @@
  * Provides facilities to work with Standard I/O streams, sockets, and
  * Erlang binary messages.
  */
-namespace Erlang;
+namespace Hurricane\Erlang;
 
 /**
- * Implements an Erlang pid.
+ * Implements an Erlang "new reference" (a reference created at runtime).
  */
-class Pid {
+class NewReference {
     /**
      * @var Atom
      */
@@ -20,32 +20,25 @@ class Pid {
     /**
      * @var integer
      */
-    public $identifier;
-
-    /**
-     * @var integer
-     */
-    public $serial;
-
-    /**
-     * @var integer
-     */
     public $creation;
+
+    /**
+     * @var array
+     */
+    public $ids;
 
     /**
      * Set the given data on the object.
      *
      * @param Atom $atom
-     * @param integer $identifier
-     * @param integer $serial
      * @param integer $creation
+     * @param array $ids
      *
      * @return void
      */
-    public function __construct($atom, $identifier, $serial, $creation) {
+    public function __construct($atom, $creation, $ids) {
         $this->atom = $atom;
-        $this->identifier = $identifier;
-        $this->serial = $serial;
         $this->creation = $creation;
+        $this->ids = $ids;
     }
 }

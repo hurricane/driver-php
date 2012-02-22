@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__FILE__) . '/../src/hurricane.php';
 
+use \Hurricane\Erlang;
+
 /**
  * Tests that all encoding works correctly.
  */

@@ -6,7 +6,7 @@
  * Provides facilities to work with Standard I/O streams, sockets, and
  * Erlang binary messages.
  */
-namespace Erlang;
+namespace Hurricane\Erlang;
 
 /**
  * Implements a tuple object to be used with Erlang messaging.

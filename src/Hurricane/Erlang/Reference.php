@@ -6,12 +6,12 @@
  * Provides facilities to work with Standard I/O streams, sockets, and
  * Erlang binary messages.
  */
-namespace Erlang;
+namespace Hurricane\Erlang;
 
 /**
- * Implements an Erlang port.
+ * Implements an Erlang reference.
  */
-class Port {
+class Reference {
     /**
      * @var Atom
      */

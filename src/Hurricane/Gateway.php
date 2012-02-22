@@ -8,23 +8,21 @@
  */
 namespace Hurricane;
 
-require_once dirname(__FILE__) . '../erl_codec.php'; //@todo autoload
-
 /**
  * Extends the Erlang Gateway to provide Hurricane-specific
  * functionality.
  */
-class Gateway extends \Erlang\Gateway
+class Gateway extends Erlang\Gateway
 {
     /**
      * Initialize with an optional stream. If no stream is provided,
      * Standard I/O will be used.
      *
-     * @param \Erlang\StreamInterface $stream
+     * @param Erlang\StreamInterface $stream
      *
      * @return void
      */
-    public function __construct(\Erlang\StreamInterface $stream=null)
+    public function __construct(Erlang\StreamInterface $stream=null)
     {
         parent::__construct($stream);
     }
@@ -39,9 +37,9 @@ class Gateway extends \Erlang\Gateway
     public function registerServer($name)
     {
         $this->send(
-            new \Erlang\Tuple(array(
-                new \Erlang\Atom('register_with_group'),
-                new \Erlang\Atom($name)
+            new Erlang\Tuple(array(
+                new Erlang\Atom('register_with_group'),
+                new Erlang\Atom($name)
             ))
         );
     }
@@ -54,7 +52,7 @@ class Gateway extends \Erlang\Gateway
      */
     public function sendReadySignal($name)
     {
-        $this->send(new \Erlang\Tuple(array(new Erlang\Atom('ready'))));
+        $this->send(new Erlang\Tuple(array(new Erlang\Atom('ready'))));
     }
 
     /**
@@ -87,11 +85,11 @@ class Gateway extends \Erlang\Gateway
         if ($message instanceof Message) {
             $destination = $message->getDestination();
             if (is_string($destination)) {
-                $destination = new \Erlang\Atom($destination);
+                $destination = new Erlang\Atom($destination);
             }
 
-            $data = new \Erlang\Tuple(array(
-                new \Erlang\Atom($message->getType()),
+            $data = new Erlang\Tuple(array(
+                new Erlang\Atom($message->getType()),
                 $destination,
                 $message->getTag(),
                 $message->getData(),

@@ -6,12 +6,17 @@
  * Provides facilities to work with Standard I/O streams, sockets, and
  * Erlang binary messages.
  */
-namespace Erlang;
+namespace Hurricane\Erlang;
 
 /**
- * Implements an Erlang binary.
+ * Implements an Erlang bit binary.
  */
-class Binary {
+class BitBinary {
+    /**
+     * @var integer
+     */
+    public $bits;
+
     /**
      * @var string
      */
@@ -20,11 +25,13 @@ class Binary {
     /**
      * Set the given data on the object.
      *
+     * @param integer $bits
      * @param string $data
      *
      * @return void
      */
-    public function __construct($data) {
+    public function __construct($bits, $data) {
+        $this->bits = $bits;
         $this->data = $data;
     }
 }

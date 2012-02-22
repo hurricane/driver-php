@@ -8,8 +8,6 @@
  */
 namespace Hurricane;
 
-require_once dirname(__FILE__) . '../erl_codec.php'; // @todo autoload
-
 class Message
 {
     /**
