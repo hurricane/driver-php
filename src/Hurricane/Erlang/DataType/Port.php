@@ -1,17 +1,11 @@
 <?php
 
-/**
- * Implementation of the Erlang binary protocol.
- *
- * Provides facilities to work with Standard I/O streams, sockets, and
- * Erlang binary messages.
- */
-namespace Hurricane\Erlang;
+namespace Hurricane\Erlang\DataType;
 
 /**
- * Implements an Erlang pid.
+ * Implements an Erlang port.
  */
-class Pid
+class Port
 {
     /**
      * @var Atom
@@ -26,11 +20,6 @@ class Pid
     /**
      * @var integer
      */
-    public $serial;
-
-    /**
-     * @var integer
-     */
     public $creation;
 
     /**
@@ -38,14 +27,12 @@ class Pid
      *
      * @param Atom $atom
      * @param integer $identifier
-     * @param integer $serial
      * @param integer $creation
      */
-    public function __construct($atom, $identifier, $serial, $creation)
+    public function __construct($atom, $identifier, $creation)
     {
         $this->atom = $atom;
         $this->identifier = $identifier;
-        $this->serial = $serial;
         $this->creation = $creation;
     }
 }

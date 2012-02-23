@@ -1,12 +1,6 @@
 <?php
 
-/**
- * Implementation of the Erlang binary protocol.
- *
- * Provides facilities to work with Standard I/O streams, sockets, and
- * Erlang binary messages.
- */
-namespace Hurricane\Erlang;
+namespace Hurricane\Erlang\DataType;
 
 /**
  * Implements an Erlang bit binary.

@@ -37,9 +37,9 @@ class Gateway extends Erlang\Gateway
     public function registerServer($name)
     {
         $this->send(
-            new Erlang\Tuple(array(
-                new Erlang\Atom('register_with_group'),
-                new Erlang\Atom($name)
+            new Erlang\DataType\Tuple(array(
+                new Erlang\DataType\Atom('register_with_group'),
+                new Erlang\DataType\Atom($name)
             ))
         );
     }
@@ -52,7 +52,7 @@ class Gateway extends Erlang\Gateway
      */
     public function sendReadySignal()
     {
-        $this->send(new Erlang\Tuple(array(new Erlang\Atom('ready'))));
+        $this->send(new Erlang\DataType\Tuple(array(new Erlang\DataType\Atom('ready'))));
     }
 
     /**
@@ -83,13 +83,14 @@ class Gateway extends Erlang\Gateway
     public function send($message)
     {
         if ($message instanceof Message) {
+            /** @var $message Message */
             $destination = $message->getDestination();
             if (is_string($destination)) {
-                $destination = new Erlang\Atom($destination);
+                $destination = new Erlang\DataType\Atom($destination);
             }
 
-            $data = new Erlang\Tuple(array(
-                new Erlang\Atom($message->getType()),
+            $data = new Erlang\DataType\Tuple(array(
+                new Erlang\DataType\Atom($message->getType()),
                 $destination,
                 $message->getTag(),
                 $message->getData(),

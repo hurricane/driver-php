@@ -58,11 +58,11 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return AtomCacheRef
+     * @return DataType\AtomCacheRef
      */
     public static function decode_atom_cache_ref(StreamInterface $stream)
     {
-        return new AtomCacheRef(ord($stream->read(1)));
+        return new DataType\AtomCacheRef(ord($stream->read(1)));
     }
 
     /**
@@ -110,12 +110,12 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return Atom
+     * @return DataType\Atom
      */
     public static function decode_atom_ext(StreamInterface $stream)
     {
         $atom_len = reset(unpack('n', $stream->read(2)));
-        return new Atom($stream->read($atom_len));
+        return new DataType\Atom($stream->read($atom_len));
     }
 
     /**
@@ -123,14 +123,14 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return Reference
+     * @return DataType\Reference
      */
     public static function decode_reference_ext(StreamInterface $stream)
     {
         $atom = self::decode($stream, false);
         $identifier = reset(unpack('N', $stream->read(4)));
         $creation = ord($stream->read(1));
-        return new Reference($atom, $identifier, $creation);
+        return new DataType\Reference($atom, $identifier, $creation);
     }
 
     /**
@@ -138,14 +138,14 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return Port
+     * @return DataType\Port
      */
     public static function decode_port_ext(StreamInterface $stream)
     {
         $atom = self::decode($stream, false);
         $identifier = reset(unpack('N', $stream->read(4)));
         $creation = ord($stream->read(1));
-        return new Port($atom, $identifier, $creation);
+        return new DataType\Port($atom, $identifier, $creation);
     }
 
     /**
@@ -153,7 +153,7 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return Pid
+     * @return DataType\Pid
      */
     public static function decode_pid_ext(StreamInterface $stream)
     {
@@ -161,7 +161,7 @@ class Util
         $identifier = reset(unpack('N', $stream->read(4)));
         $serial = reset(unpack('N', $stream->read(4)));
         $creation = ord($stream->read(1));
-        return new Pid($atom, $identifier, $serial, $creation);
+        return new DataType\Pid($atom, $identifier, $serial, $creation);
     }
 
     /**
@@ -169,7 +169,7 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return Tuple
+     * @return DataType\Tuple
      */
     public static function decode_small_tuple_ext(StreamInterface $stream)
     {
@@ -179,7 +179,7 @@ class Util
             $value = self::decode($stream, false);
             $elements[] = $value;
         }
-        return new Tuple($elements);
+        return new DataType\Tuple($elements);
     }
 
     /**
@@ -187,7 +187,7 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return Tuple
+     * @return DataType\Tuple
      */
     public static function decode_large_tuple_ext(StreamInterface $stream)
     {
@@ -197,7 +197,7 @@ class Util
             $value = self::decode($stream, false);
             $elements[] = $value;
         }
-        return new Tuple($elements);
+        return new DataType\Tuple($elements);
     }
 
     /**
@@ -269,12 +269,12 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return Binary
+     * @return DataType\Binary
      */
     public static function decode_binary_ext(StreamInterface $stream)
     {
         $bin_len = reset(unpack('N', $stream->read(4)));
-        return new Binary($stream->read($bin_len));
+        return new DataType\Binary($stream->read($bin_len));
     }
 
     /**
@@ -326,7 +326,7 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return NewReference
+     * @return DataType\NewReference
      */
     public static function decode_new_reference_ext(StreamInterface $stream)
     {
@@ -338,7 +338,7 @@ class Util
             $id = reset(unpack('N', $stream->read(4)));
             array_unshift($ids, $id);
         }
-        return new NewReference($atom, $creation, $ids);
+        return new DataType\NewReference($atom, $creation, $ids);
     }
 
     /**
@@ -346,13 +346,13 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return Atom
+     * @return DataType\Atom
      */
     public static function decode_small_atom_ext(StreamInterface $stream)
     {
         $atom_len = ord($stream->read(1));
         $atom_name = $stream->read($atom_len);
-        return new Atom($atom_name);
+        return new DataType\Atom($atom_name);
     }
 
     /**
@@ -360,7 +360,7 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return NewFunction
+     * @return DataType\NewFunction
      */
     public static function decode_new_fun_ext(StreamInterface $stream)
     {
@@ -382,7 +382,7 @@ class Util
             $free_vars = null;
         }
 
-        return new NewFunction(
+        return new DataType\NewFunction(
             $arity, $uniq, $index, $module,
             $old_index, $old_uniq, $pid, $free_vars);
     }
@@ -392,14 +392,14 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return Export
+     * @return DataType\Export
      */
     public static function decode_export_ext(StreamInterface $stream)
     {
         $module = self::decode($stream, false);
         $function = self::decode($stream, false);
         $arity = self::decode($stream, false);
-        return new Export($module, $function, $arity);
+        return new DataType\Export($module, $function, $arity);
     }
 
     /**
@@ -407,7 +407,7 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return ErlFunction
+     * @return DataType\ErlFunction
      */
     public static function decode_fun_ext(StreamInterface $stream)
     {
@@ -425,7 +425,7 @@ class Util
             $free_vars = null;
         }
 
-        return new ErlFunction($pid, $module, $index, $uniq, $free_vars);
+        return new DataType\ErlFunction($pid, $module, $index, $uniq, $free_vars);
     }
 
     /**
@@ -433,12 +433,12 @@ class Util
      *
      * @static
      * @param StreamInterface $stream
-     * @return BitBinary
+     * @return DataType\BitBinary
      */
     public static function decode_bit_binary_ext(StreamInterface $stream)
     {
         $length = reset(unpack('N', $stream->read(4)));
-        return new BitBinary(ord($stream->read(1)), $stream->read($length));
+        return new DataType\BitBinary(ord($stream->read(1)), $stream->read($length));
     }
 
     /**
@@ -535,10 +535,10 @@ class Util
      * Encode an Erlang bit binary into the stream.
      *
      * @static
-     * @param BitBinary $data
+     * @param DataType\BitBinary $data
      * @param StreamInterface $stream
      */
-    public static function encode_bit_binary(BitBinary $data, StreamInterface $stream)
+    public static function encode_bit_binary(DataType\BitBinary $data, StreamInterface $stream)
     {
         $stream->write(chr(77));
         $stream->write(pack('N', strlen($data->data)));
@@ -550,10 +550,10 @@ class Util
      * Encode an Erlang atom cache ref into the stream.
      *
      * @static
-     * @param AtomCacheRef $data
+     * @param DataType\AtomCacheRef $data
      * @param StreamInterface $stream
      */
-    public static function encode_atom_cache_ref(AtomCacheRef $data, StreamInterface $stream)
+    public static function encode_atom_cache_ref(DataType\AtomCacheRef $data, StreamInterface $stream)
     {
         $stream->write(chr(82));
         $stream->write(chr($data->value));
@@ -605,10 +605,10 @@ class Util
      * Encode an Erlang atom into the stream.
      *
      * @static
-     * @param Atom $data
+     * @param DataType\Atom $data
      * @param StreamInterface $stream
      */
-    public static function encode_atom(Atom $data, StreamInterface $stream)
+    public static function encode_atom(DataType\Atom $data, StreamInterface $stream)
     {
         $name_len = strlen($data->name);
         if ($name_len <= 0xf) {
@@ -620,15 +620,15 @@ class Util
         }
         $stream->write($data->name);
     }
-    
+
     /**
      * Encode an Erlang reference into the stream.
      *
      * @static
-     * @param Reference $data
+     * @param DataType\Reference $data
      * @param StreamInterface $stream
      */
-    public static function encode_reference(Reference $data, StreamInterface $stream)
+    public static function encode_reference(DataType\Reference $data, StreamInterface $stream)
     {
         $stream->write(chr(101));
         self::encode($data->atom, $stream, false);
@@ -640,10 +640,10 @@ class Util
      * Encode an Erlang port into the stream.
      *
      * @static
-     * @param Port $data
+     * @param DataType\Port $data
      * @param StreamInterface $stream
      */
-    public static function encode_port(Port $data, StreamInterface $stream)
+    public static function encode_port(DataType\Port $data, StreamInterface $stream)
     {
         $stream->write(chr(102));
         self::encode($data->atom, $stream, false);
@@ -655,10 +655,10 @@ class Util
      * Encode an Erlang pid into the stream.
      *
      * @static
-     * @param Pid $data
+     * @param DataType\Pid $data
      * @param StreamInterface $stream
      */
-    public static function encode_pid(Pid $data, StreamInterface $stream)
+    public static function encode_pid(DataType\Pid $data, StreamInterface $stream)
     {
         $stream->write(chr(103));
         self::encode($data->atom, $stream, false);
@@ -671,10 +671,10 @@ class Util
      * Encode a tuple into the stream.
      *
      * @static
-     * @param Tuple $data
+     * @param DataType\Tuple $data
      * @param StreamInterface $stream
      */
-    public static function encode_tuple(Tuple $data, StreamInterface $stream)
+    public static function encode_tuple(DataType\Tuple $data, StreamInterface $stream)
     {
         $data_len = count($data->data);
         if (count($data->data) < 256) {
@@ -705,10 +705,10 @@ class Util
      * Encode an Erlang binary into the stream.
      *
      * @static
-     * @param Binary $data
+     * @param DataType\Binary $data
      * @param StreamInterface $stream
      */
-    public static function encode_binary(Binary $data, StreamInterface $stream)
+    public static function encode_binary(DataType\Binary $data, StreamInterface $stream)
     {
         $stream->write(chr(109));
         $stream->write(pack('N', strlen($data->data)));
@@ -768,7 +768,7 @@ class Util
         $stream->write(chr(108));
         $stream->write(pack('N', count($data)));
         foreach ($data as $key => $value) {
-            self::encode(new Tuple(array($key, $value)), $stream, false);
+            self::encode(new DataType\Tuple(array($key, $value)), $stream, false);
         }
         $stream->write(chr(106));
     }
@@ -797,10 +797,10 @@ class Util
      * Encode an Erlang new reference into the stream.
      *
      * @static
-     * @param NewReference $data
+     * @param DataType\NewReference $data
      * @param StreamInterface $stream
      */
-    public static function encode_new_reference(NewReference $data, StreamInterface $stream)
+    public static function encode_new_reference(DataType\NewReference $data, StreamInterface $stream)
     {
         $stream->write(chr(114));
         $ids_len = count($data->ids);
@@ -816,10 +816,10 @@ class Util
      * Encode an Erlang function into the stream.
      *
      * @static
-     * @param ErlFunction $data
+     * @param DataType\ErlFunction $data
      * @param StreamInterface $stream
      */
-    public static function encode_function(ErlFunction $data, StreamInterface $stream)
+    public static function encode_function(DataType\ErlFunction $data, StreamInterface $stream)
     {
         $stream->write(chr(117));
         if ($data->free_vars == null) {
@@ -843,10 +843,10 @@ class Util
      * Encode an Erlang "new function" into the stream.
      *
      * @static
-     * @param NewFunction $data
+     * @param DataType\NewFunction $data
      * @param StreamInterface $stream
      */
-    public static function encode_new_function(NewFunction $data, StreamInterface $stream)
+    public static function encode_new_function(DataType\NewFunction $data, StreamInterface $stream)
     {
         $stream->write(chr(112));
         if ($data->free_vars == null) {
@@ -877,10 +877,10 @@ class Util
      * Encode an Erlang export into the stream.
      *
      * @static
-     * @param Export $data
+     * @param DataType\Export $data
      * @param StreamInterface $stream
      */
-    public static function encode_export(Export $data, StreamInterface $stream)
+    public static function encode_export(DataType\Export $data, StreamInterface $stream)
     {
         $stream->write(chr(113));
         self::encode($data->module, $stream, false);
@@ -907,24 +907,24 @@ class Util
             $stream->write(chr(131));
         }
 
-        if     (is_float($data))               { self::encode_float($data, $stream); }
-        elseif ($data instanceof AtomCacheRef) { self::encode_atom_cache_ref($data, $stream); }
-        elseif (is_numeric($data))             { self::encode_number($data, $stream); }
-        elseif ($data instanceof Atom)         { self::encode_atom($data, $stream); }
-        elseif ($data instanceof Reference)    { self::encode_reference($data, $stream); }
-        elseif ($data instanceof Port)         { self::encode_port($data, $stream); }
-        elseif ($data instanceof Pid)          { self::encode_pid($data, $stream); }
-        elseif ($data instanceof Tuple)        { self::encode_tuple($data, $stream); }
-        elseif ($data == null)                 { self::encode_null($data, $stream); }
-        elseif (is_string($data))              { self::encode_str($data, $stream); }
-        elseif (is_array($data))               { self::encode_array($data, $stream); }
-        elseif ($data instanceof Binary)       { self::encode_binary($data, $stream); }
-        elseif ($data instanceof NewReference) { self::encode_new_reference($data, $stream); }
-        elseif ($data instanceof ErlFunction)  { self::encode_function($data, $stream); }
-        elseif ($data instanceof NewFunction)  { self::encode_new_function($data, $stream); }
-        elseif ($data instanceof BitBinary)    { self::encode_bit_binary($data, $stream); }
-        elseif ($data instanceof Export)       { self::encode_export($data, $stream); }
-        elseif ($data instanceof Serializable) { self::encode($data->toErlang(), $stream, false); }
+        if     (is_float($data))                        { self::encode_float($data, $stream); }
+        elseif ($data instanceof DataType\AtomCacheRef) { self::encode_atom_cache_ref($data, $stream); }
+        elseif (is_numeric($data))                      { self::encode_number($data, $stream); }
+        elseif ($data instanceof DataType\Atom)         { self::encode_atom($data, $stream); }
+        elseif ($data instanceof DataType\Reference)    { self::encode_reference($data, $stream); }
+        elseif ($data instanceof DataType\Port)         { self::encode_port($data, $stream); }
+        elseif ($data instanceof DataType\Pid)          { self::encode_pid($data, $stream); }
+        elseif ($data instanceof DataType\Tuple)        { self::encode_tuple($data, $stream); }
+        elseif ($data == null)                          { self::encode_null($data, $stream); }
+        elseif (is_string($data))                       { self::encode_str($data, $stream); }
+        elseif (is_array($data))                        { self::encode_array($data, $stream); }
+        elseif ($data instanceof DataType\Binary)       { self::encode_binary($data, $stream); }
+        elseif ($data instanceof DataType\NewReference) { self::encode_new_reference($data, $stream); }
+        elseif ($data instanceof DataType\ErlFunction)  { self::encode_function($data, $stream); }
+        elseif ($data instanceof DataType\NewFunction)  { self::encode_new_function($data, $stream); }
+        elseif ($data instanceof DataType\BitBinary)    { self::encode_bit_binary($data, $stream); }
+        elseif ($data instanceof DataType\Export)       { self::encode_export($data, $stream); }
+        elseif ($data instanceof Serializable)          { self::encode($data->toErlang(), $stream, false); }
         else {
             throw new Exception(get_class($data) . ' is not Erlang serializable');
         }
