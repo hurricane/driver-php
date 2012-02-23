@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Implements an Erlang port.
  */
-class Port {
+class Port
+{
     /**
      * @var Atom
      */
@@ -33,10 +34,9 @@ class Port {
      * @param Atom $atom
      * @param integer $identifier
      * @param integer $creation
-     *
-     * @return void
      */
-    public function __construct($atom, $identifier, $creation) {
+    public function __construct($atom, $identifier, $creation)
+    {
         $this->atom = $atom;
         $this->identifier = $identifier;
         $this->creation = $creation;

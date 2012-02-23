@@ -8,10 +8,8 @@
  */
 namespace Hurricane\Erlang;
 
-/**
- *
- */
-class Gateway {
+class Gateway
+{
     /**
      * The raw device stream that to read/write to.
      *
@@ -30,11 +28,10 @@ class Gateway {
      * Initialize with an optional stream. If no stream is provided,
      * Standard I/O will be used.
      *
-     * @param StreamInterface $stream
-     *
-     * @return void
+     * @param StreamInterface|null $stream
      */
-    public function __construct(StreamInterface $stream=null) {
+    public function __construct(StreamInterface $stream=null)
+    {
         if ($stream) {
             $this->setStream($stream);
         } else {
@@ -47,20 +44,18 @@ class Gateway {
      * Close any open stream and set the new one.
      *
      * @param StreamInterface $stream
-     *
-     * @return void
      */
-    public function setStream(StreamInterface $stream) {
+    public function setStream(StreamInterface $stream)
+    {
         $this->close();
         $this->stream = $stream;
     }
 
     /**
      * If there is an active stream, close it.
-     *
-     * @return void
      */
-    private function close() {
+    private function close()
+    {
         if ($this->stream) {
             $this->stream->close();
         }
@@ -71,7 +66,8 @@ class Gateway {
      *
      * @return mixed
      */
-    public function recv() {
+    public function recv()
+    {
         $message_len = $this->stream->read(4);
 
         if (strlen($message_len) < 4) {
@@ -89,10 +85,9 @@ class Gateway {
      * Send one message to Hurricane.
      *
      * @param mixed $message
-     *
-     * @return void
      */
-    public function send($message) {
+    public function send($message)
+    {
         $this->stream_wrapper->clear();
         Util::encode($message, $this->stream_wrapper);
         $this->stream->write(pack('N', strlen($this->stream_wrapper->data)));

@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Implements an Erlang export.
  */
-class Export {
+class Export
+{
     /**
      * @var Atom
      */
@@ -33,10 +34,9 @@ class Export {
      * @param Atom $module
      * @param Atom $function
      * @param integer $arity
-     *
-     * @return void
      */
-    public function __construct($module, $function, $arity) {
+    public function __construct($module, $function, $arity)
+    {
         $this->module = $module;
         $this->function = $function;
         $this->arity = $arity;

@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Implements a tuple object to be used with Erlang messaging.
  */
-class Tuple {
+class Tuple
+{
     /**
      * @var array
      */
@@ -21,10 +22,9 @@ class Tuple {
      * Set the given data on the object.
      *
      * @param array $data
-     *
-     * @return void
      */
-    public function __construct($data) {
+    public function __construct($data)
+    {
         $this->data = $data;
     }
 }

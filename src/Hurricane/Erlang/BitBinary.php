@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Implements an Erlang bit binary.
  */
-class BitBinary {
+class BitBinary
+{
     /**
      * @var integer
      */
@@ -27,10 +28,9 @@ class BitBinary {
      *
      * @param integer $bits
      * @param string $data
-     *
-     * @return void
      */
-    public function __construct($bits, $data) {
+    public function __construct($bits, $data)
+    {
         $this->bits = $bits;
         $this->data = $data;
     }

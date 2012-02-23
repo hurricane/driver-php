@@ -13,7 +13,8 @@ namespace Hurricane\Erlang;
  * themselves into a data structure that the Erlang encoding functions
  * know how to encode.
  */
-interface Serializable {
+interface Serializable
+{
     /**
      * The public function that returns a value to serialize as Erlang
      * terms.

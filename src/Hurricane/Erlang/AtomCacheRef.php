@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Implements an Erlang atom cache ref.
  */
-class AtomCacheRef {
+class AtomCacheRef
+{
     /**
      * @var integer
      */
@@ -21,10 +22,9 @@ class AtomCacheRef {
      * Set the given data on the object.
      *
      * @param integer $value
-     *
-     * @return void
      */
-    public function __construct($value) {
+    public function __construct($value)
+    {
         $this->value = $value;
     }
 }

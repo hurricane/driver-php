@@ -48,8 +48,6 @@ class Message
 
     /**
      * Constructs a new Hurricane message with default values.
-     *
-     * @return void
      */
     public function __construct()
     {

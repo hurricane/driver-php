@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Wraps socket creation and usage logic. Serves as a Gateway transport.
  */
-class SocketWrapper implements StreamInterface {
+class SocketWrapper implements StreamInterface
+{
     /**
      * The socket over which communication is occurring.
      *
@@ -24,19 +25,17 @@ class SocketWrapper implements StreamInterface {
      *
      * @param string $host
      * @param integer $port
-     *
-     * @return void
      */
-    public function __construct($host, $port) {
+    public function __construct($host, $port)
+    {
         $this->socket = fsockopen($host, $port);
     }
 
     /**
      * Close the socket.
-     *
-     * @return void
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->close();
     }
 
@@ -44,10 +43,10 @@ class SocketWrapper implements StreamInterface {
      * Read data from the socket.
      *
      * @param integer $num
-     *
      * @return string
      */
-    public function read($num) {
+    public function read($num)
+    {
         $chunks = array();
         $len_read_so_far = 0;
         while ($len_read_so_far < $num) {
@@ -62,28 +61,26 @@ class SocketWrapper implements StreamInterface {
      * Write data to the socket.
      *
      * @param string $data
-     *
      * @return string
      */
-    public function write($data) {
+    public function write($data)
+    {
         return fwrite($this->socket, $data);
     }
 
     /**
      * Exist for interface completeness.
-     *
-     * @return void
      */
-    public function flush() {
+    public function flush()
+    {
         fflush($this->socket);
     }
 
     /**
      * Close the socket.
-     *
-     * @return void
      */
-    public function close() {
+    public function close()
+    {
         fclose($this->socket);
     }
 }

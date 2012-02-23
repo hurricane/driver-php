@@ -2,10 +2,17 @@
 
 namespace Hurricane;
 
+/**
+ * Optional autoloader. Since Hurricane follows PSR-0 standards,
+ * most framework autoloaders will suffice.
+ *
+ * @see https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+ */
 class Autoload
 {
     /**
      * @static
+     * @return void
      */
     public static function registerSpl()
     {

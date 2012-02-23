@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Emulates a stream. Highly useful for debugging.
  */
-class StreamEmulator implements StreamInterface {
+class StreamEmulator implements StreamInterface
+{
     /**
      * The data buffer used to store bytes.
      *
@@ -29,11 +30,10 @@ class StreamEmulator implements StreamInterface {
     /**
      * Initialize the stream emulator with an optional data argument.
      *
-     * @param $data string|array
-     *
-     * @return void
+     * @param string|array $data
      */
-    public function __construct($data=null) {
+    public function __construct($data=null)
+    {
         $this->pos = 0;
 
         if (!$data) {
@@ -53,7 +53,8 @@ class StreamEmulator implements StreamInterface {
      *
      * @return string
      */
-    public function read($bytes) {
+    public function read($bytes)
+    {
         if (strlen($this->data) < $this->pos + $bytes) {
             throw new Exception(
                 'Out of data to read (was asked for ' .
@@ -74,24 +75,23 @@ class StreamEmulator implements StreamInterface {
      *
      * @return void
      */
-    public function write($data) {
+    public function write($data)
+    {
         $this->data .= $data;
     }
 
     /**
      * Exist for interface completeness.
      *
-     * @return void
+     * @todo throw exception?
      */
-    public function flush() {
-    }
+    public function flush() {}
 
     /**
      * Reset the position and clear the data buffer.
-     *
-     * @return void
      */
-    public function clear() {
+    public function clear()
+    {
         $this->data = '';
         $this->pos = 0;
     }
@@ -99,7 +99,7 @@ class StreamEmulator implements StreamInterface {
     /**
      * Exist for interface completeness.
      *
-     * @return void
+     * @todo throw exception?
      */
     public function close() {}
 }

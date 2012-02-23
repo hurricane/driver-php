@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Implements an Erlang "new reference" (a reference created at runtime).
  */
-class NewReference {
+class NewReference
+{
     /**
      * @var Atom
      */
@@ -33,10 +34,9 @@ class NewReference {
      * @param Atom $atom
      * @param integer $creation
      * @param array $ids
-     *
-     * @return void
      */
-    public function __construct($atom, $creation, $ids) {
+    public function __construct($atom, $creation, $ids)
+    {
         $this->atom = $atom;
         $this->creation = $creation;
         $this->ids = $ids;

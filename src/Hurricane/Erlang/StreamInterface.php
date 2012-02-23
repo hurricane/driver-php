@@ -17,8 +17,8 @@ interface StreamInterface
     /**
      * Read bytes number of data and return it.
      *
-     * @param $bytes integer
-     *
+     * @abstract
+     * @param $num
      * @return string
      */
     public function read($num);
@@ -26,15 +26,15 @@ interface StreamInterface
     /**
      * Write binary data to the stream.
      *
+     * @abstract
      * @param $data string
-     *
-     * @return void
      */
     public function write($data);
 
     /**
      * Write all buffered data to the output device.
      *
+     * @abstract
      * @return void
      */
     public function flush();
@@ -42,7 +42,7 @@ interface StreamInterface
     /**
      * Close the output device.
      *
-     * @return void
+     * @abstract
      */
     public function close();
 }

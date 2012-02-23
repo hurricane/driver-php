@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Implements an Erlang atom.
  */
-class Atom {
+class Atom
+{
     /**
      * @var string
      */
@@ -21,10 +22,9 @@ class Atom {
      * Set the given data on the object.
      *
      * @param string $name
-     *
-     * @return void
      */
-    public function __construct($name) {
+    public function __construct($name)
+    {
         $this->name = $name;
     }
 }

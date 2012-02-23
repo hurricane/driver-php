@@ -20,7 +20,7 @@ class Gateway extends Erlang\Gateway
      *
      * @param Erlang\StreamInterface $stream
      *
-     * @return void
+     * @return \Hurricane\Gateway
      */
     public function __construct(Erlang\StreamInterface $stream=null)
     {
@@ -50,7 +50,7 @@ class Gateway extends Erlang\Gateway
      *
      * @return void
      */
-    public function sendReadySignal($name)
+    public function sendReadySignal()
     {
         $this->send(new Erlang\Tuple(array(new Erlang\Atom('ready'))));
     }

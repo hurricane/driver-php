@@ -12,7 +12,8 @@ namespace Hurricane\Erlang;
  * Wraps Standard I/O input and output facilities. Serves as a Gateway
  * transport.
  */
-class StdioWrapper implements StreamInterface {
+class StdioWrapper implements StreamInterface
+{
     /**
      * A handle to the Standard In stream.
      *
@@ -29,10 +30,9 @@ class StdioWrapper implements StreamInterface {
 
     /**
      * Open Standard In and Standard Out.
-     *
-     * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->in = fopen('php://stdin', 'r');
         $this->out = fopen('php://stdout', 'w');
     }
@@ -42,7 +42,8 @@ class StdioWrapper implements StreamInterface {
      *
      * @return void
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->close();
     }
 
@@ -50,40 +51,38 @@ class StdioWrapper implements StreamInterface {
      * Read data from the Standard In stream.
      *
      * @param integer $num
-     *
      * @return string
      */
-    public function read($num) {
+    public function read($num)
+    {
         return fread($this->in, $num);
     }
 
     /**
      * Write data to the Standard Out stream.
      *
-     * @param string $data
-     *
-     * @return void
+     * @param $data
+     * @return int
      */
-    public function write($data) {
+    public function write($data)
+    {
         return fwrite($this->out, $data);
     }
 
     /**
      * Flush all data in the Standard Out buffer to the Standard Out
      * stream.
-     *
-     * @return void
      */
-    public function flush() {
+    public function flush()
+    {
         fflush($this->out);
     }
 
     /**
      * Close Standard In and Standard Out.
-     *
-     * @return void
      */
-    public function close() {
+    public function close()
+    {
         fclose($this->in);
         fclose($this->out);
     }

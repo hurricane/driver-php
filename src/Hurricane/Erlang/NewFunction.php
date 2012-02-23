@@ -12,7 +12,8 @@ namespace Hurricane\Erlang;
  * Implements an Erlang function (created at run-time, usually with
  * the fun () -> end syntax).
  */
-class NewFunction {
+class NewFunction
+{
     /**
      * @var integer
      */
@@ -64,8 +65,6 @@ class NewFunction {
      * @param integer $old_uniq
      * @param Pid $pid
      * @param array $free_vars
-     *
-     * @return void
      */
     public function __construct(
         $arity, $uniq, $index, $module, $old_index,

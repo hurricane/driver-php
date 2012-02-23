@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Implements an Erlang pid.
  */
-class Pid {
+class Pid
+{
     /**
      * @var Atom
      */
@@ -39,10 +40,9 @@ class Pid {
      * @param integer $identifier
      * @param integer $serial
      * @param integer $creation
-     *
-     * @return void
      */
-    public function __construct($atom, $identifier, $serial, $creation) {
+    public function __construct($atom, $identifier, $serial, $creation)
+    {
         $this->atom = $atom;
         $this->identifier = $identifier;
         $this->serial = $serial;

@@ -11,7 +11,8 @@ namespace Hurricane\Erlang;
 /**
  * Implements an Erlang function (defined at compile-time).
  */
-class ErlFunction {
+class ErlFunction
+{
     /**
      * @var Pid
      */
@@ -45,10 +46,9 @@ class ErlFunction {
      * @param integer $index
      * @param integer $uniq
      * @param array $free_vars
-     *
-     * @return void
      */
-    public function __construct($pid, $module, $index, $uniq, $free_vars) {
+    public function __construct($pid, $module, $index, $uniq, $free_vars)
+    {
         $this->pid = $pid;
         $this->module = $module;
         $this->index = $index;
