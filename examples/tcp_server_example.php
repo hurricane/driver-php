@@ -1,9 +1,6 @@
 <?php
 
-require dirname(__FILE__) . '/../src/Hurricane/Autoload.php';
-
-\Hurricane\Autoload::registerSpl();
-
+require realpath('./../autoload.php.dist');
 date_default_timezone_set('America/Denver');
 
 $gateway = new \Hurricane\Gateway(

@@ -204,10 +204,9 @@ class Util
      * Decode and return a nil/null/None.
      *
      * @static
-     * @param StreamInterface $stream
      * @return null
      */
-    public static function decode_nil_ext(StreamInterface $stream)
+    public static function decode_nil_ext()
     {
         return null;
     }
@@ -242,6 +241,8 @@ class Util
         $list_len = reset(unpack('N', $stream->read(4)));
         $elements = array();
         $is_str = true;
+        
+        // @todo $value might not be defined here...
         for ($i = 0; $i < $list_len; $i++) {
             $value = self::decode($stream, false);
             $is_str = $is_str && is_numeric($value) && $value < 256;
@@ -364,7 +365,7 @@ class Util
      */
     public static function decode_new_fun_ext(StreamInterface $stream)
     {
-        $size = reset(unpack('N', $stream->read(4)));
+        unpack('N', $stream->read(4));
         $arity = ord($stream->read(1));
         $uniq = $stream->read(16);
         $index = reset(unpack('N', $stream->read(4)));
@@ -496,7 +497,7 @@ class Util
             case 103: return self::decode_pid_ext($stream);
             case 104: return self::decode_small_tuple_ext($stream);
             case 105: return self::decode_large_tuple_ext($stream);
-            case 106: return self::decode_nil_ext($stream);
+            case 106: return self::decode_nil_ext();
             case 107: return self::decode_string_ext($stream);
             case 108: return self::decode_list_ext($stream);
             case 109: return self::decode_binary_ext($stream);
@@ -693,10 +694,9 @@ class Util
      * Encode a NoneType into the stream (as Erlang nil).
      *
      * @static
-     * @param null $data
      * @param StreamInterface $stream
      */
-    public static function encode_null($data, StreamInterface $stream)
+    public static function encode_null(StreamInterface $stream)
     {
         $stream->write(chr(106));
     }
@@ -915,7 +915,7 @@ class Util
         elseif ($data instanceof DataType\Port)         { self::encode_port($data, $stream); }
         elseif ($data instanceof DataType\Pid)          { self::encode_pid($data, $stream); }
         elseif ($data instanceof DataType\Tuple)        { self::encode_tuple($data, $stream); }
-        elseif ($data == null)                          { self::encode_null($data, $stream); }
+        elseif ($data == null)                          { self::encode_null($stream); }
         elseif (is_string($data))                       { self::encode_str($data, $stream); }
         elseif (is_array($data))                        { self::encode_array($data, $stream); }
         elseif ($data instanceof DataType\Binary)       { self::encode_binary($data, $stream); }
@@ -924,6 +924,7 @@ class Util
         elseif ($data instanceof DataType\NewFunction)  { self::encode_new_function($data, $stream); }
         elseif ($data instanceof DataType\BitBinary)    { self::encode_bit_binary($data, $stream); }
         elseif ($data instanceof DataType\Export)       { self::encode_export($data, $stream); }
+        /** @var $data Serializable */
         elseif ($data instanceof Serializable)          { self::encode($data->toErlang(), $stream, false); }
         else {
             throw new Exception(get_class($data) . ' is not Erlang serializable');
