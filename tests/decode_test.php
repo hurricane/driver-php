@@ -1,6 +1,6 @@
 <?php
 
-require dirname(__FILE__) . '/../src/Hurricane/Autoload.php';
+require_once dirname(__FILE__) . '/../src/Hurricane/Autoload.php';
 
 \Hurricane\Autoload::registerSpl();
 
