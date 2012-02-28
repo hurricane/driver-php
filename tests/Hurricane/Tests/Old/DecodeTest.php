@@ -1,15 +1,13 @@
 <?php
 
-require_once dirname(__FILE__) . '/../src/Hurricane/Autoload.php';
-
-\Hurricane\Autoload::registerSpl();
+namespace Hurricane\Tests\Old;
 
 use \Hurricane\Erlang;
 
 /**
  * Tests that all decoding works correctly.
  */
-class DecodeTest extends PHPUnit_Framework_TestCase
+class DecodeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test decoding an atom cache reference.
