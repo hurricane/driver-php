@@ -1,6 +1,6 @@
 <?php
 
-namespace Hurricane\Tests\Old;
+namespace Hurricane\Tests\Erlang;
 
 use \Hurricane\Erlang\Util;
 use \Hurricane\Erlang\DataType;
