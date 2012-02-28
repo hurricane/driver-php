@@ -29,7 +29,8 @@ class SocketWrapper implements StreamInterface
     public function __construct($host, $port)
     {
         // @todo throw exception when not resource (hurricane not started)
-        $this->socket = fsockopen($host, $port);
+        // @todo will need to extract all f functions to properly stub
+        $this->socket = fsockopen($host, $port, $errno, $errstr);
     }
 
     /**
