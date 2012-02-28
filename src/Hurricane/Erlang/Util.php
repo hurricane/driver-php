@@ -693,10 +693,9 @@ class Util
      * Encode a NoneType into the stream (as Erlang nil).
      *
      * @static
-     * @param null $data
      * @param StreamInterface $stream
      */
-    public static function encode_null($data, StreamInterface $stream)
+    public static function encode_null(StreamInterface $stream)
     {
         $stream->write(chr(106));
     }
@@ -915,7 +914,7 @@ class Util
         elseif ($data instanceof DataType\Port)         { self::encode_port($data, $stream); }
         elseif ($data instanceof DataType\Pid)          { self::encode_pid($data, $stream); }
         elseif ($data instanceof DataType\Tuple)        { self::encode_tuple($data, $stream); }
-        elseif ($data == null)                          { self::encode_null($data, $stream); }
+        elseif ($data == null)                          { self::encode_null($stream); }
         elseif (is_string($data))                       { self::encode_str($data, $stream); }
         elseif (is_array($data))                        { self::encode_array($data, $stream); }
         elseif ($data instanceof DataType\Binary)       { self::encode_binary($data, $stream); }
@@ -924,6 +923,7 @@ class Util
         elseif ($data instanceof DataType\NewFunction)  { self::encode_new_function($data, $stream); }
         elseif ($data instanceof DataType\BitBinary)    { self::encode_bit_binary($data, $stream); }
         elseif ($data instanceof DataType\Export)       { self::encode_export($data, $stream); }
+        /** @var $data Serializable */
         elseif ($data instanceof Serializable)          { self::encode($data->toErlang(), $stream, false); }
         else {
             throw new Exception(get_class($data) . ' is not Erlang serializable');
