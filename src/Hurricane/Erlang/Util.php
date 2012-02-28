@@ -23,7 +23,7 @@ class Util
     public static function getMachineEndianness()
     {
         if (self::$machineEndiness === null) {
-            if (reset(unpack('L', "\x00\x00\x00\x01")) == 1) {
+            if (reset((unpack('L', "\x00\x00\x00\x01"))) == 1) {
                 self::$machineEndiness = self::MACHINE_ENDIANNESS_BIG_ENDIAN;
             } else {
                 self::$machineEndiness = self::MACHINE_ENDIANNESS_LITTLE_ENDIAN;
@@ -90,7 +90,7 @@ class Util
         if (self::getMachineEndianness() == self::MACHINE_ENDIANNESS_LITTLE_ENDIAN) {
             $val = strrev($val);
         }
-        return reset(unpack('l', $val));
+        return reset((unpack('l', $val)));
     }
 
     /**
@@ -114,7 +114,7 @@ class Util
      */
     public static function decode_atom_ext(StreamInterface $stream)
     {
-        $atom_len = reset(unpack('n', $stream->read(2)));
+        $atom_len = reset((unpack('n', $stream->read(2))));
         return new DataType\Atom($stream->read($atom_len));
     }
 
@@ -128,7 +128,7 @@ class Util
     public static function decode_reference_ext(StreamInterface $stream)
     {
         $atom = self::decode($stream, false);
-        $identifier = reset(unpack('N', $stream->read(4)));
+        $identifier = reset((unpack('N', $stream->read(4))));
         $creation = ord($stream->read(1));
         return new DataType\Reference($atom, $identifier, $creation);
     }
@@ -143,7 +143,7 @@ class Util
     public static function decode_port_ext(StreamInterface $stream)
     {
         $atom = self::decode($stream, false);
-        $identifier = reset(unpack('N', $stream->read(4)));
+        $identifier = reset((unpack('N', $stream->read(4))));
         $creation = ord($stream->read(1));
         return new DataType\Port($atom, $identifier, $creation);
     }
@@ -158,8 +158,8 @@ class Util
     public static function decode_pid_ext(StreamInterface $stream)
     {
         $atom = self::decode($stream, false);
-        $identifier = reset(unpack('N', $stream->read(4)));
-        $serial = reset(unpack('N', $stream->read(4)));
+        $identifier = reset((unpack('N', $stream->read(4))));
+        $serial = reset((unpack('N', $stream->read(4))));
         $creation = ord($stream->read(1));
         return new DataType\Pid($atom, $identifier, $serial, $creation);
     }
@@ -191,7 +191,7 @@ class Util
      */
     public static function decode_large_tuple_ext(StreamInterface $stream)
     {
-        $tuple_len = reset(unpack('N', $stream->read(4)));
+        $tuple_len = reset((unpack('N', $stream->read(4))));
         $elements = array();
         for ($i = 0; $i < $tuple_len; $i++) {
             $value = self::decode($stream, false);
@@ -220,7 +220,7 @@ class Util
      */
     public static function decode_string_ext(StreamInterface $stream)
     {
-        $str_len = reset(unpack('n', $stream->read(2)));
+        $str_len = reset((unpack('n', $stream->read(2))));
         return $stream->read($str_len);
     }
 
@@ -238,7 +238,7 @@ class Util
      */
     public static function decode_list_ext(StreamInterface $stream)
     {
-        $list_len = reset(unpack('N', $stream->read(4)));
+        $list_len = reset((unpack('N', $stream->read(4))));
         $elements = array();
         $is_str = true;
         
@@ -274,7 +274,7 @@ class Util
      */
     public static function decode_binary_ext(StreamInterface $stream)
     {
-        $bin_len = reset(unpack('N', $stream->read(4)));
+        $bin_len = reset((unpack('N', $stream->read(4))));
         return new DataType\Binary($stream->read($bin_len));
     }
 
@@ -310,7 +310,7 @@ class Util
      */
     public static function decode_large_big_ext(StreamInterface $stream)
     {
-        $num_bytes = reset(unpack('N', $stream->read(4)));
+        $num_bytes = reset((unpack('N', $stream->read(4))));
         $sign = ord($stream->read(1));
         $num = 0.0;
         for ($i = 0; $i < $num_bytes; $i++) {
@@ -331,12 +331,12 @@ class Util
      */
     public static function decode_new_reference_ext(StreamInterface $stream)
     {
-        $length = reset(unpack('n', $stream->read(2)));
+        $length = reset((unpack('n', $stream->read(2))));
         $atom = self::decode($stream, false);
         $creation = ord($stream->read(1));
         $ids = array();
         for ($i = 0; $i < $length; $i++) {
-            $id = reset(unpack('N', $stream->read(4)));
+            $id = reset((unpack('N', $stream->read(4))));
             array_unshift($ids, $id);
         }
         return new DataType\NewReference($atom, $creation, $ids);
@@ -368,8 +368,8 @@ class Util
         unpack('N', $stream->read(4));
         $arity = ord($stream->read(1));
         $uniq = $stream->read(16);
-        $index = reset(unpack('N', $stream->read(4)));
-        $num_free = reset(unpack('N', $stream->read(4)));
+        $index = reset((unpack('N', $stream->read(4))));
+        $num_free = reset((unpack('N', $stream->read(4))));
         $module = self::decode($stream, false);
         $old_index = self::decode($stream, false);
         $old_uniq = self::decode($stream, false);
@@ -412,7 +412,7 @@ class Util
      */
     public static function decode_fun_ext(StreamInterface $stream)
     {
-        $num_free = reset(unpack('N', $stream->read(4)));
+        $num_free = reset((unpack('N', $stream->read(4))));
         $pid = self::decode($stream, false);
         $module = self::decode($stream, false);
         $index = self::decode($stream, false);
@@ -438,7 +438,7 @@ class Util
      */
     public static function decode_bit_binary_ext(StreamInterface $stream)
     {
-        $length = reset(unpack('N', $stream->read(4)));
+        $length = reset((unpack('N', $stream->read(4))));
         return new DataType\BitBinary(ord($stream->read(1)), $stream->read($length));
     }
 
@@ -455,7 +455,7 @@ class Util
         if (self::getMachineEndianness() == self::MACHINE_ENDIANNESS_LITTLE_ENDIAN) {
             $data = strrev($data);
         }
-        return reset(unpack('d', $data));
+        return reset((unpack('d', $data)));
     }
 
     /**
