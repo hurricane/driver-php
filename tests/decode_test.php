@@ -1,5 +1,10 @@
 <?php
-require_once dirname(__FILE__) . '/../erl_codec.php';
+
+require_once dirname(__FILE__) . '/../src/Hurricane/Autoload.php';
+
+\Hurricane\Autoload::registerSpl();
+
+use \Hurricane\Erlang;
 
 /**
  * Tests that all decoding works correctly.
@@ -14,10 +19,10 @@ class DecodeTest extends PHPUnit_Framework_TestCase
     public function testDecodeAtomCacheRef()
     {
         $input = array(131, 82, 1);
-        $expected = new Erlang\AtomCacheRef(1);
+        $expected = new Erlang\DataType\AtomCacheRef(1);
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -33,7 +38,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = 123;
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -49,7 +54,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = 1234;
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -65,7 +70,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = -69;
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -85,7 +90,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = 1.1;
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -100,10 +105,10 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $input = array(
             131, 100, 0, 9, 105, 108, 105, 97, 95, 97, 116, 111, 109
         );
-        $expected = new Erlang\Atom('ilia_atom');
+        $expected = new Erlang\DataType\Atom('ilia_atom');
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -119,12 +124,12 @@ class DecodeTest extends PHPUnit_Framework_TestCase
             131, 101, 100, 0, 9, 105, 108, 105, 97, 95, 97, 116, 111,
             109, 1, 1, 1, 1, 42
         );
-        $expected = new Erlang\Reference(
-            new Erlang\Atom('ilia_atom'), 16843009, 42
+        $expected = new Erlang\DataType\Reference(
+            new Erlang\DataType\Atom('ilia_atom'), 16843009, 42
         );
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -140,12 +145,12 @@ class DecodeTest extends PHPUnit_Framework_TestCase
             131, 102, 100, 0, 13, 110, 111, 110, 111, 100, 101, 64, 110,
             111, 104, 111, 115, 116, 0, 0, 1, 245, 0
         );
-        $expected = new Erlang\Port(
-            new Erlang\Atom('nonode@nohost'), 501, 0
+        $expected = new Erlang\DataType\Port(
+            new Erlang\DataType\Atom('nonode@nohost'), 501, 0
         );
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -161,12 +166,12 @@ class DecodeTest extends PHPUnit_Framework_TestCase
             131, 103, 100, 0, 13, 110, 111, 110, 111, 100, 101, 64, 110,
             111, 104, 111, 115, 116, 0, 0, 0, 31, 0, 0, 0, 0, 0
         );
-        $expected = new Erlang\Pid(
-            new Erlang\Atom('nonode@nohost'), 31, 0, 0
+        $expected = new Erlang\DataType\Pid(
+            new Erlang\DataType\Atom('nonode@nohost'), 31, 0, 0
         );
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -179,10 +184,10 @@ class DecodeTest extends PHPUnit_Framework_TestCase
     public function testDecodeSmallTuple()
     {
         $input = array(131, 104, 2, 97, 42, 97, 69);
-        $expected = new Erlang\Tuple(array(42, 69));
+        $expected = new Erlang\DataType\Tuple(array(42, 69));
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -230,7 +235,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
             1, 97, 1, 97, 1, 97, 1, 97, 1, 97, 1, 97, 1, 97, 1, 97, 1,
             97, 1, 97, 1, 97, 1, 97, 1, 97, 69
         );
-        $expected = new Erlang\Tuple(array(
+        $expected = new Erlang\DataType\Tuple(array(
             42, 69, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -249,7 +254,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         ));
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -265,7 +270,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = null;
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -285,7 +290,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = 'now get your ass to mars';
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -303,7 +308,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = array(1024, 69, 42);
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -321,7 +326,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = array(1024, 69, 42, 1);
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -338,10 +343,10 @@ class DecodeTest extends PHPUnit_Framework_TestCase
             121, 111, 117, 114, 32, 97, 115, 115, 32, 116, 111, 32, 109,
             97, 114, 115, 
         );
-        $expected = new Erlang\Binary('now get your ass to mars');
+        $expected = new Erlang\DataType\Binary('now get your ass to mars');
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -357,7 +362,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = 19238740997;
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -373,7 +378,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = 77;
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -390,12 +395,12 @@ class DecodeTest extends PHPUnit_Framework_TestCase
             64, 110, 111, 104, 111, 115, 116, 0, 0, 0, 0, 94, 0, 0, 0,
             0, 0, 0, 0, 0
         );
-        $expected = new Erlang\NewReference(
-            new Erlang\Atom('nonode@nohost'), 0, array(0, 0, 94)
+        $expected = new Erlang\DataType\NewReference(
+            new Erlang\DataType\Atom('nonode@nohost'), 0, array(0, 0, 94)
         );
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -408,10 +413,10 @@ class DecodeTest extends PHPUnit_Framework_TestCase
     public function testDecodeSmallAtom()
     {
         $input = array(131, 115, 4, 97, 98, 99, 100);
-        $expected = new Erlang\Atom('abcd');
+        $expected = new Erlang\DataType\Atom('abcd');
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -427,12 +432,12 @@ class DecodeTest extends PHPUnit_Framework_TestCase
             131, 113, 100, 0, 6, 101, 114, 108, 97, 110, 103, 100, 0, 4,
             115, 101, 108, 102, 97, 0
         );
-        $expected = new Erlang\Export(
-            new Erlang\Atom('erlang'), new Erlang\Atom('self'), 0
+        $expected = new Erlang\DataType\Export(
+            new Erlang\DataType\Atom('erlang'), new Erlang\DataType\Atom('self'), 0
         );
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -452,15 +457,15 @@ class DecodeTest extends PHPUnit_Framework_TestCase
             101, 64, 110, 111, 104, 111, 115, 116, 0, 0, 0, 31, 0, 0, 0,
             0, 0
         );
-        $expected = new Erlang\NewFunction(
+        $expected = new Erlang\DataType\NewFunction(
             0, "\xb8\x8f\x81\x94 \x91?\xb3[\xc9\x96^\x97a:\xe3", 1,
-            new Erlang\Atom('erl_eval'), 20, 67289768,
-            new Erlang\Pid(new Erlang\Atom('nonode@nohost'), 31, 0, 0),
+            new Erlang\DataType\Atom('erl_eval'), 20, 67289768,
+            new Erlang\DataType\Pid(new Erlang\DataType\Atom('nonode@nohost'), 31, 0, 0),
             null
         );
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -478,15 +483,15 @@ class DecodeTest extends PHPUnit_Framework_TestCase
             0, 0, 0, 0, 100, 0, 9, 105, 108, 105, 97, 95, 97, 116, 111,
             109, 97, 1, 97, 1
         );
-        $expected = new Erlang\ErlFunction(
-            new Erlang\Pid(
-                new Erlang\Atom('nonode@nohost'), 31, 0, 0
+        $expected = new Erlang\DataType\ErlFunction(
+            new Erlang\DataType\Pid(
+                new Erlang\DataType\Atom('nonode@nohost'), 31, 0, 0
             ),
-            new Erlang\Atom('ilia_atom'), 1, 1, null
+            new Erlang\DataType\Atom('ilia_atom'), 1, 1, null
         );
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -499,10 +504,10 @@ class DecodeTest extends PHPUnit_Framework_TestCase
     public function testDecodeBitBinary()
     {
         $input = array(131, 77, 0, 0, 0, 4, 4, 195, 139, 30, 64);
-        $expected = new Erlang\BitBinary(4, "\xc3\x8b\x1e@");
+        $expected = new Erlang\DataType\BitBinary(4, "\xc3\x8b\x1e@");
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
@@ -518,7 +523,7 @@ class DecodeTest extends PHPUnit_Framework_TestCase
         $expected = 7.7486041854893479e-304;
 
         $stream = new Erlang\StreamEmulator($input);
-        $actual = Erlang\decode($stream);
+        $actual = Erlang\Util::decode($stream);
 
         $this->assertEquals($expected, $actual);
     }
