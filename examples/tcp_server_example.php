@@ -1,11 +1,13 @@
 <?php
 
-require dirname(__FILE__) . '/../drivers/php/hurricane.php';
+require dirname(__FILE__) . '/../src/Hurricane/Autoload.php';
+
+\Hurricane\Autoload::registerSpl();
 
 date_default_timezone_set('America/Denver');
 
 $gateway = new \Hurricane\Gateway(
-    new \Erlang\SocketWrapper('localhost', '3000')
+    new \Hurricane\Erlang\SocketWrapper('localhost', '3000')
 );
 $gateway->registerServer('time_server');
 while (true) {
