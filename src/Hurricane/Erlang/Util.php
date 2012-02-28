@@ -22,7 +22,7 @@ class Util
      */
     public static function getMachineEndianness()
     {
-        if (is_null(self::$machineEndiness)) {
+        if (self::$machineEndiness === null) {
             if (reset(unpack('L', "\x00\x00\x00\x01")) == 1) {
                 self::$machineEndiness = self::MACHINE_ENDIANNESS_BIG_ENDIAN;
             } else {
