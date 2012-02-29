@@ -23,7 +23,7 @@ class AtomCacheRef
     }
 
     /**
-     * @param string $value
+     * @param integer $value
      */
     public function setValue($value)
     {
@@ -31,7 +31,7 @@ class AtomCacheRef
     }
 
     /**
-     * @return string
+     * @return integer
      */
     public function getValue()
     {
