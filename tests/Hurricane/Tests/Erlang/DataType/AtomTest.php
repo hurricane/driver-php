@@ -6,6 +6,9 @@ use \Hurricane\Erlang\DataType\Atom;
 
 class AtomTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \Hurricane\Erlang\DataType\Atom
+     */
     protected $subject;
 
     public function setUp()
@@ -22,8 +25,28 @@ class AtomTest extends \PHPUnit_Framework_TestCase
 
     public function testNameShouldBeSettableAndGettable()
     {
-        $name = 'bob';
+        $name = 'hurricane';
         $this->subject->setName($name);
         $this->assertEquals($name, $this->subject->getName());
+    }
+
+    public function testNameShouldBeCastToString()
+    {
+        $this->subject->setName('test');
+        $this->assertTrue(is_string($this->subject->getName()));
+
+        $this->subject->setName(10);
+        $this->assertTrue(is_string($this->subject->getName()));
+
+        $this->subject->setName(true);
+        $this->assertTrue(is_string($this->subject->getName()));
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+    public function testNameShouldBeRequired()
+    {
+        new Atom();
     }
 }
