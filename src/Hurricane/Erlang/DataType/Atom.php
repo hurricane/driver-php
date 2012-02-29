@@ -10,7 +10,7 @@ class Atom
     /**
      * @var string
      */
-    public $name;
+    protected $name;
 
     /**
      * Set the given data on the object.
@@ -19,6 +19,22 @@ class Atom
      */
     public function __construct($name)
     {
-        $this->name = $name;
+        $this->setName($name);
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = (string) $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
