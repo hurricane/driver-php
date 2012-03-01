@@ -2,6 +2,7 @@
 
 namespace Hurricane\Tests\Erlang\DataType;
 
+use \Hurricane\Support\TestHelper;
 use \Hurricane\Erlang\DataType\Atom;
 
 class AtomTest extends \PHPUnit_Framework_TestCase
@@ -11,35 +12,54 @@ class AtomTest extends \PHPUnit_Framework_TestCase
      */
     protected $subject;
 
+    /**
+     * @var \Hurricane\Support\TestHelper
+     */
+    protected $helper;
+
     public function setUp()
     {
         $this->subject = new Atom('bob');
+        $this->helper = new TestHelper($this->subject);
     }
 
     public function testClassShouldExist()
     {
-        $class = '\Hurricane\Erlang\DataType\Atom';
-        $this->assertTrue(class_exists($class));
-        $this->assertInstanceOf($class, $this->subject);
+        $this->helper->assertClassExists('\Hurricane\Erlang\DataType\Atom');
     }
 
-    public function testNameShouldBeSettableAndGettable()
+    /**
+     * @dataProvider propertiesProvider
+     * @param $property
+     * @param $value
+     */
+    public function testShouldSetAndGet($property, $value)
     {
-        $name = 'hurricane';
-        $this->subject->setName($name);
-        $this->assertEquals($name, $this->subject->getName());
+        $this->helper->assertSetAndGet($property, $value);
     }
 
-    public function testNameShouldBeCastToString()
+    public function propertiesProvider()
     {
-        $this->subject->setName('test');
-        $this->assertTrue(is_string($this->subject->getName()));
+        return array(
+            array('name', 'hurricane'),
+        );
+    }
 
-        $this->subject->setName(10);
-        $this->assertTrue(is_string($this->subject->getName()));
+    /**
+     * @dataProvider propertiesCastProvider
+     * @param $property
+     * @param $type
+     */
+    public function testShouldCast($property, $type)
+    {
+        $this->helper->assertCastCorrectly($property, $type);
+    }
 
-        $this->subject->setName(true);
-        $this->assertTrue(is_string($this->subject->getName()));
+    public function propertiesCastProvider()
+    {
+        return array(
+            array('name', 'string'),
+        );
     }
 
     /**

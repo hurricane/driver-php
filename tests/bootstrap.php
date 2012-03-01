@@ -8,3 +8,7 @@ if (is_file($autoload)) {
 } else {
     require_once $autoload . '.dist';
 }
+
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'Hurricane' .
+                       DIRECTORY_SEPARATOR . 'Support' .
+                       DIRECTORY_SEPARATOR . 'TestHelper.php';

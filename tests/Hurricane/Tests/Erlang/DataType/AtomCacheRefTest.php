@@ -2,44 +2,64 @@
 
 namespace Hurricane\Tests\Erlang\DataType;
 
+use \Hurricane\Support\TestHelper;
 use \Hurricane\Erlang\DataType\AtomCacheRef;
 
 class AtomCacheRefTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \Hurricane\Support\TestHelper
+     */
+    protected $helper;
+
+    /**
+     * @var \Hurricane\Erlang\DataType\AtomCacheRef
+     */
     protected $subject;
 
     public function setUp()
     {
         $this->subject = new AtomCacheRef(10);
+        $this->helper = new TestHelper($this->subject);
     }
 
     public function testClassShouldExist()
     {
-        $class = '\Hurricane\Erlang\DataType\AtomCacheRef';
-        $this->assertTrue(class_exists($class));
-        $this->assertInstanceOf($class, $this->subject);
+        $this->helper->assertClassExists('\Hurricane\Erlang\DataType\AtomCacheRef');
     }
 
-    public function testValueShouldBeSettableAndGettable()
+    /**
+     * @dataProvider propertiesProvider
+     * @param $property
+     * @param $value
+     */
+    public function testShouldSetAndGet($property, $value)
     {
-        $value = 10;
-        $this->subject->setValue($value);
-        $this->assertEquals($value, $this->subject->getValue());
+        $this->helper->assertSetAndGet($property, $value);
     }
 
-    public function testNameShouldBeCastToInt()
+    public function propertiesProvider()
     {
-        $this->subject->setValue(10);
-        $this->assertTrue(is_int($this->subject->getValue()));
+        return array(
+            array('value', 10),
+        );
+    }
 
-        $this->subject->setValue('test');
-        $this->assertTrue(is_int($this->subject->getValue()));
+    /**
+     * @dataProvider propertiesCastProvider
+     * @param $property
+     * @param $type
+     */
+    public function testShouldCast($property, $type)
+    {
+        $this->helper->assertCastCorrectly($property, $type);
+    }
 
-        $this->subject->setValue(true);
-        $this->assertTrue(is_int($this->subject->getValue()));
-
-        $this->subject->setValue(array());
-        $this->assertTrue(is_int($this->subject->getValue()));
+    public function propertiesCastProvider()
+    {
+        return array(
+            array('value', 'int'),
+        );
     }
 
     /**
