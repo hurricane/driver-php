@@ -31,9 +31,9 @@ class Port
      */
     public function __construct($atom, $identifier, $creation)
     {
-        $this->_atom = $atom;
-        $this->_identifier = $identifier;
-        $this->_creation = $creation;
+        $this->setAtom($atom);
+        $this->setIdentifier($identifier);
+        $this->getCreation($creation);
     }
 
     /**
