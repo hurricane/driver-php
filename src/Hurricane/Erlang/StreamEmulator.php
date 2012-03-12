@@ -83,7 +83,7 @@ class StreamEmulator implements StreamInterface
     /**
      * Exist for interface completeness.
      *
-     * @todo throw exception?
+     * @return void
      */
     public function flush() {}
 
@@ -99,7 +99,7 @@ class StreamEmulator implements StreamInterface
     /**
      * Exist for interface completeness.
      *
-     * @todo throw exception?
+     * @return void
      */
     public function close() {}
 }
