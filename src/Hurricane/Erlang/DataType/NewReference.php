@@ -31,9 +31,9 @@ class NewReference
      */
     public function __construct($atom, $creation, $ids)
     {
-        $this->_atom = $atom;
-        $this->_creation = $creation;
-        $this->_ids = $ids;
+        $this->setAtom($atom);
+        $this->setCreation($creation);
+        $this->setIds($ids);
     }
 
     /**
