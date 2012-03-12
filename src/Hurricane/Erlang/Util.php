@@ -878,9 +878,9 @@ class Util
     public static function encode_export(DataType\Export $data, StreamInterface $stream)
     {
         $stream->write(chr(113));
-        self::encode($data->module, $stream, false);
-        self::encode($data->function, $stream, false);
-        self::encode($data->arity, $stream, false);
+        self::encode($data->getModule(), $stream, false);
+        self::encode($data->getFunction(), $stream, false);
+        self::encode($data->getArity(), $stream, false);
     }
 
     /**
