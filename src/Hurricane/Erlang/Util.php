@@ -822,18 +822,14 @@ class Util
     public static function encode_function(DataType\ErlFunction $data, StreamInterface $stream)
     {
         $stream->write(chr(117));
-        if ($data->free_vars == null) {
-            $free_vars_len = 0;
-        } else {
-            $free_vars_len = count($data->free_vars);
-        }
+        $free_vars_len = $data->getNumFreeVars();
         $stream->write(pack('N', $free_vars_len));
-        self::encode($data->pid, $stream, false);
-        self::encode($data->module, $stream, false);
-        self::encode($data->index, $stream, false);
-        self::encode($data->uniq, $stream, false);
+        self::encode($data->getPid(), $stream, false);
+        self::encode($data->getModule(), $stream, false);
+        self::encode($data->getIndex(), $stream, false);
+        self::encode($data->getUniq(), $stream, false);
         if ($free_vars_len > 0) {
-            foreach ($data->free_vars as $free_var) {
+            foreach ($data->getFreeVars() as $free_var) {
                 $stream->write(pack('N', $free_var));
             }
         }
