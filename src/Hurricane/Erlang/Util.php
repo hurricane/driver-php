@@ -542,9 +542,9 @@ class Util
     public static function encode_bit_binary(DataType\BitBinary $data, StreamInterface $stream)
     {
         $stream->write(chr(77));
-        $stream->write(pack('N', strlen($data->data)));
-        $stream->write(chr($data->bits));
-        $stream->write($data->data);
+        $stream->write(pack('N', strlen($data->getData())));
+        $stream->write(chr($data->getBits()));
+        $stream->write($data->getData());
     }
 
     /**
