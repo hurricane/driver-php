@@ -844,23 +844,19 @@ class Util
     public static function encode_new_function(DataType\NewFunction $data, StreamInterface $stream)
     {
         $stream->write(chr(112));
-        if ($data->free_vars == null) {
-            $free_vars_len = 0;
-        } else {
-            $free_vars_len = count($data->free_vars);
-        }
+        $free_vars_len = $data->getNumFreeVars();
 
         $bytes = new StreamEmulator();
-        $bytes->write(chr($data->arity));
-        $bytes->write($data->uniq);
-        $bytes->write(pack('N', $data->index));
+        $bytes->write(chr($data->getArity()));
+        $bytes->write($data->getUniq());
+        $bytes->write(pack('N', $data->getIndex()));
         $bytes->write(pack('N', $free_vars_len));
-        self::encode($data->module, $bytes, false);
-        self::encode($data->old_index, $bytes, false);
-        self::encode($data->old_uniq, $bytes, false);
-        self::encode($data->pid, $bytes, false);
+        self::encode($data->getModule(), $bytes, false);
+        self::encode($data->getOldIndex(), $bytes, false);
+        self::encode($data->getOldUniq(), $bytes, false);
+        self::encode($data->getPid(), $bytes, false);
         if ($free_vars_len > 0) {
-            foreach ($data->free_vars as $free_var) {
+            foreach ($data->getFreeVars() as $free_var) {
                 $bytes->write(pack('N', $free_var));
             }
         }
