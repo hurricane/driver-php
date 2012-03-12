@@ -631,9 +631,9 @@ class Util
     public static function encode_reference(DataType\Reference $data, StreamInterface $stream)
     {
         $stream->write(chr(101));
-        self::encode($data->atom, $stream, false);
-        $stream->write(pack('N', $data->identifier));
-        $stream->write(chr($data->creation));
+        self::encode($data->getAtom(), $stream, false);
+        $stream->write(pack('N', $data->getIdentifier()));
+        $stream->write(chr($data->getCreation()));
     }
 
     /**
