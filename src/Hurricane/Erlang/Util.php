@@ -711,8 +711,8 @@ class Util
     public static function encode_binary(DataType\Binary $data, StreamInterface $stream)
     {
         $stream->write(chr(109));
-        $stream->write(pack('N', strlen($data->data)));
-        $stream->write($data->data);
+        $stream->write(pack('N', strlen($data->getData())));
+        $stream->write($data->getData());
     }
 
     /**
