@@ -802,11 +802,11 @@ class Util
     public static function encode_new_reference(DataType\NewReference $data, StreamInterface $stream)
     {
         $stream->write(chr(114));
-        $ids_len = count($data->ids);
+        $ids_len = count($data->getIds());
         $stream->write(pack('n', $ids_len));
-        self::encode($data->atom, $stream, false);
-        $stream->write(chr($data->creation));
-        foreach ($data->ids as $id) {
+        self::encode($data->getAtom(), $stream, false);
+        $stream->write(chr($data->getCreation()));
+        foreach ($data->getIds() as $id) {
             $stream->write(pack('N', $id));
         }
     }
