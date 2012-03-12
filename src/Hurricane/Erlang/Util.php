@@ -557,7 +557,7 @@ class Util
     public static function encode_atom_cache_ref(DataType\AtomCacheRef $data, StreamInterface $stream)
     {
         $stream->write(chr(82));
-        $stream->write(chr($data->value));
+        $stream->write(chr($data->getValue()));
     }
 
     /**
