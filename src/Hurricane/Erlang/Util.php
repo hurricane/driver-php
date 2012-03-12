@@ -174,12 +174,11 @@ class Util
     public static function decode_small_tuple_ext(StreamInterface $stream)
     {
         $tuple_len = ord($stream->read(1));
-        $elements = array();
+        $tuple = new DataType\Tuple();
         for ($i = 0; $i < $tuple_len; $i++) {
-            $value = self::decode($stream, false);
-            $elements[] = $value;
+            $tuple->append(self::decode($stream, false));
         }
-        return new DataType\Tuple($elements);
+        return $tuple;
     }
 
     /**
@@ -192,12 +191,11 @@ class Util
     public static function decode_large_tuple_ext(StreamInterface $stream)
     {
         $tuple_len = reset((unpack('N', $stream->read(4))));
-        $elements = array();
+        $tuple = new DataType\Tuple();
         for ($i = 0; $i < $tuple_len; $i++) {
-            $value = self::decode($stream, false);
-            $elements[] = $value;
+            $tuple->append(self::decode($stream, false));
         }
-        return new DataType\Tuple($elements);
+        return $tuple;
     }
 
     /**
@@ -676,7 +674,7 @@ class Util
      */
     public static function encode_tuple(DataType\Tuple $data, StreamInterface $stream)
     {
-        $data_len = $data->size();
+        $data_len = count($data);
         if ($data_len < 256) {
             $stream->write(chr(104));
             $stream->write(chr($data_len));
@@ -684,7 +682,7 @@ class Util
             $stream->write(chr(105));
             $stream->write(pack('N', $data_len));
         }
-        foreach ($data->getData() as $datum) {
+        foreach ($data as $datum) {
             self::encode($datum, $stream, false);
         }
     }
