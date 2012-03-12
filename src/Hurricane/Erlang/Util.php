@@ -242,7 +242,6 @@ class Util
         $elements = array();
         $is_str = true;
 
-        // @todo $value might not be defined here...
         for ($i = 0; $i < $list_len; $i++) {
             $value = self::decode($stream, false);
             $is_str = $is_str && is_numeric($value) && $value < 256;
@@ -250,7 +249,7 @@ class Util
         }
         $tail = self::decode($stream, false);
         if ($tail !== null) {
-            $is_str = $is_str && is_numeric($value) && $value < 256;
+            $is_str = $is_str && is_numeric($tail) && $tail < 256;
             $elements[] = $tail;
         }
 
@@ -542,9 +541,9 @@ class Util
     public static function encode_bit_binary(DataType\BitBinary $data, StreamInterface $stream)
     {
         $stream->write(chr(77));
-        $stream->write(pack('N', strlen($data->data)));
-        $stream->write(chr($data->bits));
-        $stream->write($data->data);
+        $stream->write(pack('N', strlen($data->getData())));
+        $stream->write(chr($data->getBits()));
+        $stream->write($data->getData());
     }
 
     /**
@@ -632,9 +631,9 @@ class Util
     public static function encode_reference(DataType\Reference $data, StreamInterface $stream)
     {
         $stream->write(chr(101));
-        self::encode($data->atom, $stream, false);
-        $stream->write(pack('N', $data->identifier));
-        $stream->write(chr($data->creation));
+        self::encode($data->getAtom(), $stream, false);
+        $stream->write(pack('N', $data->getIdentifier()));
+        $stream->write(chr($data->getCreation()));
     }
 
     /**
@@ -647,9 +646,9 @@ class Util
     public static function encode_port(DataType\Port $data, StreamInterface $stream)
     {
         $stream->write(chr(102));
-        self::encode($data->atom, $stream, false);
-        $stream->write(pack('N', $data->identifier));
-        $stream->write(chr($data->creation));
+        self::encode($data->getAtom(), $stream, false);
+        $stream->write(pack('N', $data->getIdentifier()));
+        $stream->write(chr($data->getCreation()));
     }
 
     /**
@@ -662,10 +661,10 @@ class Util
     public static function encode_pid(DataType\Pid $data, StreamInterface $stream)
     {
         $stream->write(chr(103));
-        self::encode($data->atom, $stream, false);
-        $stream->write(pack('N', $data->identifier));
-        $stream->write(pack('N', $data->serial));
-        $stream->write(chr($data->creation));
+        self::encode($data->getAtom(), $stream, false);
+        $stream->write(pack('N', $data->getIdentifier()));
+        $stream->write(pack('N', $data->getSerial()));
+        $stream->write(chr($data->getCreation()));
     }
 
     /**
@@ -677,15 +676,15 @@ class Util
      */
     public static function encode_tuple(DataType\Tuple $data, StreamInterface $stream)
     {
-        $data_len = count($data->data);
-        if (count($data->data) < 256) {
+        $data_len = $data->size();
+        if ($data_len < 256) {
             $stream->write(chr(104));
             $stream->write(chr($data_len));
         } else {
             $stream->write(chr(105));
             $stream->write(pack('N', $data_len));
         }
-        foreach ($data->data as $datum) {
+        foreach ($data->getData() as $datum) {
             self::encode($datum, $stream, false);
         }
     }
@@ -711,8 +710,8 @@ class Util
     public static function encode_binary(DataType\Binary $data, StreamInterface $stream)
     {
         $stream->write(chr(109));
-        $stream->write(pack('N', strlen($data->data)));
-        $stream->write($data->data);
+        $stream->write(pack('N', strlen($data->getData())));
+        $stream->write($data->getData());
     }
 
     /**
@@ -803,11 +802,11 @@ class Util
     public static function encode_new_reference(DataType\NewReference $data, StreamInterface $stream)
     {
         $stream->write(chr(114));
-        $ids_len = count($data->ids);
+        $ids_len = count($data->getIds());
         $stream->write(pack('n', $ids_len));
-        self::encode($data->atom, $stream, false);
-        $stream->write(chr($data->creation));
-        foreach ($data->ids as $id) {
+        self::encode($data->getAtom(), $stream, false);
+        $stream->write(chr($data->getCreation()));
+        foreach ($data->getIds() as $id) {
             $stream->write(pack('N', $id));
         }
     }
@@ -822,18 +821,14 @@ class Util
     public static function encode_function(DataType\ErlFunction $data, StreamInterface $stream)
     {
         $stream->write(chr(117));
-        if ($data->free_vars == null) {
-            $free_vars_len = 0;
-        } else {
-            $free_vars_len = count($data->free_vars);
-        }
+        $free_vars_len = $data->getNumFreeVars();
         $stream->write(pack('N', $free_vars_len));
-        self::encode($data->pid, $stream, false);
-        self::encode($data->module, $stream, false);
-        self::encode($data->index, $stream, false);
-        self::encode($data->uniq, $stream, false);
+        self::encode($data->getPid(), $stream, false);
+        self::encode($data->getModule(), $stream, false);
+        self::encode($data->getIndex(), $stream, false);
+        self::encode($data->getUniq(), $stream, false);
         if ($free_vars_len > 0) {
-            foreach ($data->free_vars as $free_var) {
+            foreach ($data->getFreeVars() as $free_var) {
                 $stream->write(pack('N', $free_var));
             }
         }
@@ -849,23 +844,19 @@ class Util
     public static function encode_new_function(DataType\NewFunction $data, StreamInterface $stream)
     {
         $stream->write(chr(112));
-        if ($data->free_vars == null) {
-            $free_vars_len = 0;
-        } else {
-            $free_vars_len = count($data->free_vars);
-        }
+        $free_vars_len = $data->getNumFreeVars();
 
         $bytes = new StreamEmulator();
-        $bytes->write(chr($data->arity));
-        $bytes->write($data->uniq);
-        $bytes->write(pack('N', $data->index));
+        $bytes->write(chr($data->getArity()));
+        $bytes->write($data->getUniq());
+        $bytes->write(pack('N', $data->getIndex()));
         $bytes->write(pack('N', $free_vars_len));
-        self::encode($data->module, $bytes, false);
-        self::encode($data->old_index, $bytes, false);
-        self::encode($data->old_uniq, $bytes, false);
-        self::encode($data->pid, $bytes, false);
+        self::encode($data->getModule(), $bytes, false);
+        self::encode($data->getOldIndex(), $bytes, false);
+        self::encode($data->getOldUniq(), $bytes, false);
+        self::encode($data->getPid(), $bytes, false);
         if ($free_vars_len > 0) {
-            foreach ($data->free_vars as $free_var) {
+            foreach ($data->getFreeVars() as $free_var) {
                 $bytes->write(pack('N', $free_var));
             }
         }
@@ -883,9 +874,9 @@ class Util
     public static function encode_export(DataType\Export $data, StreamInterface $stream)
     {
         $stream->write(chr(113));
-        self::encode($data->module, $stream, false);
-        self::encode($data->function, $stream, false);
-        self::encode($data->arity, $stream, false);
+        self::encode($data->getModule(), $stream, false);
+        self::encode($data->getFunction(), $stream, false);
+        self::encode($data->getArity(), $stream, false);
     }
 
     /**

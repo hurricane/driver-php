@@ -10,17 +10,17 @@ class NewReference
     /**
      * @var Atom
      */
-    public $atom;
+    private $_atom;
 
     /**
      * @var integer
      */
-    public $creation;
+    private $_creation;
 
     /**
      * @var array
      */
-    public $ids;
+    private $_ids;
 
     /**
      * Set the given data on the object.
@@ -31,8 +31,74 @@ class NewReference
      */
     public function __construct($atom, $creation, $ids)
     {
-        $this->atom = $atom;
-        $this->creation = $creation;
-        $this->ids = $ids;
+        $this->setAtom($atom);
+        $this->setCreation($creation);
+        $this->setIds($ids);
+    }
+
+    /**
+     * Setter for atom.
+     *
+     * @param \Hurricane\Erlang\DataType\Atom $atom
+     *
+     * @return void
+     */
+    public function setAtom($atom)
+    {
+        $this->_atom = $atom;
+    }
+
+    /**
+     * Getter for atom.
+     *
+     * @return \Hurricane\Erlang\DataType\Atom
+     */
+    public function getAtom()
+    {
+        return $this->_atom;
+    }
+
+    /**
+     * Setter for creation.
+     *
+     * @param int $creation
+     *
+     * @return void
+     */
+    public function setCreation($creation)
+    {
+        $this->_creation = $creation;
+    }
+
+    /**
+     * Getter for creation.
+     *
+     * @return int
+     */
+    public function getCreation()
+    {
+        return $this->_creation;
+    }
+
+    /**
+     * Setter for ids.
+     *
+     * @param array $ids
+     *
+     * @return void
+     */
+    public function setIds($ids)
+    {
+        $this->_ids = $ids;
+    }
+
+    /**
+     * Getter for ids.
+     *
+     * @return array
+     */
+    public function getIds()
+    {
+        return $this->_ids;
     }
 }

@@ -10,7 +10,7 @@ class Binary
     /**
      * @var string
      */
-    public $data;
+    private $_data;
 
     /**
      * Set the given data on the object.
@@ -19,6 +19,28 @@ class Binary
      */
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->setData($data);
+    }
+
+    /**
+     * Getter for data.
+     *
+     * @return string
+     */
+    public function getData()
+    {
+        return $this->_data;
+    }
+
+    /**
+     * Setter for data.
+     *
+     * @param mixed $data
+     *
+     * @return void
+     */
+    public function setData($data)
+    {
+        $this->_data = (string) $data;
     }
 }

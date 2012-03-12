@@ -10,7 +10,7 @@ class AtomCacheRef
     /**
      * @var integer
      */
-    protected $value;
+    private $_value;
 
     /**
      * Set the given data on the object.
@@ -23,18 +23,24 @@ class AtomCacheRef
     }
 
     /**
-     * @param integer $value
-     */
-    public function setValue($value)
-    {
-        $this->value = (int) $value;
-    }
-
-    /**
-     * @return integer
+     * Getter for value.
+     *
+     * @return int
      */
     public function getValue()
     {
-        return $this->value;
+        return $this->_value;
+    }
+
+    /**
+     * Setter for value.
+     *
+     * @param int $value
+     *
+     * @return void
+     */
+    public function setValue($value)
+    {
+        $this->_value = (int) $value;
     }
 }
