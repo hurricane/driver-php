@@ -611,7 +611,7 @@ class Util
      */
     public static function encode_atom(DataType\Atom $data, StreamInterface $stream)
     {
-        $name_len = strlen($data->name);
+        $name_len = strlen($data->getName());
         if ($name_len <= 0xf) {
             $stream->write(chr(115));
             $stream->write(chr($name_len));
@@ -619,7 +619,7 @@ class Util
             $stream->write(chr(100));
             $stream->write(pack('n', $name_len));
         }
-        $stream->write($data->name);
+        $stream->write($data->getName());
     }
 
     /**
