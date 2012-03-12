@@ -65,10 +65,10 @@ class Gateway extends Erlang\Gateway
     {
         $data = parent::recv();
         $message = new Message();
-        $message->setType($data->data[0]);
-        $message->setDestination($data->data[1]);
-        $message->setTag($data->data[2]);
-        $message->setData($data->data[3]);
+        $message->setType($data[0]);
+        $message->setDestination($data[1]);
+        $message->setTag($data[2]);
+        $message->setData($data[3]);
         return $message;
     }
 
