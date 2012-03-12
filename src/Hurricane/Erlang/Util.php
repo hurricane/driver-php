@@ -241,8 +241,7 @@ class Util
         $list_len = reset((unpack('N', $stream->read(4))));
         $elements = array();
         $is_str = true;
-        
-        // @todo $value might not be defined here...
+
         for ($i = 0; $i < $list_len; $i++) {
             $value = self::decode($stream, false);
             $is_str = $is_str && is_numeric($value) && $value < 256;
@@ -250,7 +249,7 @@ class Util
         }
         $tail = self::decode($stream, false);
         if ($tail !== null) {
-            $is_str = $is_str && is_numeric($value) && $value < 256;
+            $is_str = $is_str && is_numeric($tail) && $tail < 256;
             $elements[] = $tail;
         }
 
