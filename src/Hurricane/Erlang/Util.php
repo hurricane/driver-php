@@ -676,15 +676,15 @@ class Util
      */
     public static function encode_tuple(DataType\Tuple $data, StreamInterface $stream)
     {
-        $data_len = count($data->data);
-        if (count($data->data) < 256) {
+        $data_len = $data->size();
+        if ($data_len < 256) {
             $stream->write(chr(104));
             $stream->write(chr($data_len));
         } else {
             $stream->write(chr(105));
             $stream->write(pack('N', $data_len));
         }
-        foreach ($data->data as $datum) {
+        foreach ($data->getData() as $datum) {
             self::encode($datum, $stream, false);
         }
     }

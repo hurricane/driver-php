@@ -10,7 +10,7 @@ class Tuple
     /**
      * @var array
      */
-    public $data;
+    private $_data;
 
     /**
      * Set the given data on the object.
@@ -19,6 +19,51 @@ class Tuple
      */
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->setData($data);
+    }
+
+    /**
+     * Append an element to this tuple.
+     *
+     * @param $element
+     *
+     * @return \Hurricane\Erlang\DataType\Tuple
+     */
+    public function append($element)
+    {
+        $this->_data[] = $element;
+        return $this;
+    }
+
+    /**
+     * Return the size of this tuple.
+     *
+     * @return int
+     */
+    public function size()
+    {
+        return count($this->_data);
+    }
+
+    /**
+     * Setter for data.
+     *
+     * @param array $data
+     *
+     * @return void
+     */
+    public function setData($data)
+    {
+        $this->_data = $data;
+    }
+
+    /**
+     * Getter for data.
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->_data;
     }
 }
