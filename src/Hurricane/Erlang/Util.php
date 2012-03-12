@@ -661,10 +661,10 @@ class Util
     public static function encode_pid(DataType\Pid $data, StreamInterface $stream)
     {
         $stream->write(chr(103));
-        self::encode($data->atom, $stream, false);
-        $stream->write(pack('N', $data->identifier));
-        $stream->write(pack('N', $data->serial));
-        $stream->write(chr($data->creation));
+        self::encode($data->getAtom(), $stream, false);
+        $stream->write(pack('N', $data->getIdentifier()));
+        $stream->write(pack('N', $data->getSerial()));
+        $stream->write(chr($data->getCreation()));
     }
 
     /**

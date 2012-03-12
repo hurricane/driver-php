@@ -10,22 +10,22 @@ class Pid
     /**
      * @var Atom
      */
-    public $atom;
+    private $_atom;
 
     /**
      * @var integer
      */
-    public $identifier;
+    private $_identifier;
 
     /**
      * @var integer
      */
-    public $serial;
+    private $_serial;
 
     /**
      * @var integer
      */
-    public $creation;
+    private $_creation;
 
     /**
      * Set the given data on the object.
@@ -37,9 +37,97 @@ class Pid
      */
     public function __construct($atom, $identifier, $serial, $creation)
     {
-        $this->atom = $atom;
-        $this->identifier = $identifier;
-        $this->serial = $serial;
-        $this->creation = $creation;
+        $this->setAtom($atom);
+        $this->setIdentifier($identifier);
+        $this->setSerial($serial);
+        $this->setCreation($creation);
+    }
+
+    /**
+     * Setter for atom.
+     *
+     * @param \Hurricane\Erlang\DataType\Atom $atom
+     *
+     * @return void
+     */
+    public function setAtom($atom)
+    {
+        $this->_atom = $atom;
+    }
+
+    /**
+     * Getter for atom.
+     *
+     * @return \Hurricane\Erlang\DataType\Atom
+     */
+    public function getAtom()
+    {
+        return $this->_atom;
+    }
+
+    /**
+     * Setter for creation.
+     *
+     * @param int $creation
+     *
+     * @return void
+     */
+    public function setCreation($creation)
+    {
+        $this->_creation = $creation;
+    }
+
+    /**
+     * Getter for creation.
+     *
+     * @return int
+     */
+    public function getCreation()
+    {
+        return $this->_creation;
+    }
+
+    /**
+     * Setter for identifier.
+     *
+     * @param int $identifier
+     *
+     * @return void
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->_identifier = $identifier;
+    }
+
+    /**
+     * Getter for identifier.
+     *
+     * @return int
+     */
+    public function getIdentifier()
+    {
+        return $this->_identifier;
+    }
+
+    /**
+     * Setter for serial.
+     *
+     * @param int $serial
+     *
+     * @return void
+     */
+    public function setSerial($serial)
+    {
+        $this->_serial = $serial;
+    }
+
+    /**
+     * Getter for serial.
+     *
+     * @return int
+     */
+    public function getSerial()
+    {
+        return $this->_serial;
     }
 }
